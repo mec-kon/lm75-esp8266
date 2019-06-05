@@ -8,42 +8,17 @@
  * \version 1.1
  */
 
-#include "LM75A.h"
 #include <Wire.h>
 
-namespace LM75AConstValues
-{
-
-const int LM75A_BASE_ADDRESS = 0x48;
-
-const float LM75A_DEGREES_RESOLUTION = 0.125;
-
-const int LM75A_REG_ADDR_TEMP = 0;
-//const int LM75A_REG_ADDR_CONF = 1;  // Not used for now
-//const int LM57A_REG_ADDR_THYST = 2; // Not used for now
-//const int LM57A_REG_ADDR_TOS = 3;   // Not used for now
-
-}
+#include "LM75A.h"
 
 using namespace LM75AConstValues;
 
-LM75A::LM75A(bool A0_value, bool A1_value, bool A2_value)
+LM75A::LM75A()
 {
-  _i2c_device_address = LM75A_BASE_ADDRESS;
+  i2c_device_address = LM75A_BASE_ADDRESS;
 
-  if (A0_value) {
-    _i2c_device_address += 1;
-  }
-
-  if (A1_value) {
-    _i2c_device_address += 2;
-  }
-
-  if (A2_value) {
-    _i2c_device_address += 4;
-  }
-
-  Wire.begin();
+  Wire.begin(D1, D2);
 }
 
 float LM75A::fahrenheitToDegrees(float temperature_in_fahrenheit)
@@ -73,7 +48,7 @@ float LM75A::getTemperatureInDegrees() const
   uint16_t i2c_received = 0;
 
   // Go to temperature data register
-  Wire.beginTransmission(_i2c_device_address);
+  Wire.beginTransmission(i2c_device_address);
   Wire.write(LM75A_REG_ADDR_TEMP);
   if(Wire.endTransmission()) {
     // Transmission error
@@ -81,7 +56,7 @@ float LM75A::getTemperatureInDegrees() const
   }
 
   // Get content
-  if (Wire.requestFrom(_i2c_device_address, 2)) {
+  if (Wire.requestFrom(i2c_device_address, 2)) {
     Wire.readBytes((uint8_t*)&i2c_received, 2);
   } else {
     // Can't read temperature
