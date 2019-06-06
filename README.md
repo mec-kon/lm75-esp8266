@@ -1,4 +1,4 @@
-# LM75A Temperature Sensor Library for ESP8266 NodeMcu(arduino-framework)
+# LM75A Temperature Sensor Library for ESP8266 NodeMcu (arduino-framework)
 
 ## What is it?
 
