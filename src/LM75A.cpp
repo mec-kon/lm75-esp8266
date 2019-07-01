@@ -18,7 +18,7 @@ LM75A::LM75A()
 {
   i2c_device_address = LM75A_BASE_ADDRESS;
 
-  Wire.begin(D1, D2);
+  Wire.begin(I2C_SDA, I2C_SCL);
 }
 
 float LM75A::fahrenheitToDegrees(float temperature_in_fahrenheit)

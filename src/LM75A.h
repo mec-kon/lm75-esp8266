@@ -13,6 +13,9 @@
 
 #include "Arduino.h"
 
+static const uint8_t I2C_SDA = D1;
+static const uint8_t I2C_SCL = D2;
+
 #define INVALID_LM75A_TEMPERATURE 1000
 
 namespace LM75AConstValues
